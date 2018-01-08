@@ -18,12 +18,11 @@ public class DocumentParser implements Runnable {
 	private int docId;
 	private Deque<String> buffer = new LinkedList<>();
 	
-	public DocumentParser(String file, BlockingQueue<Shingle>q, int shingleSize, int k, int dID) {
+	public DocumentParser(String file, BlockingQueue<Shingle>q, int ss, int k) {
 		this.queue = q;
 		this.file = file;
-		this.shingleSize = shingleSize;
+		this.shingleSize = ss;
 		this.k = k;
-		this.docId = dID;
 	}
 	
 	public void run() {

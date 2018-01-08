@@ -20,7 +20,7 @@ public class Menu {
 		
 		
 	}
-	public void DisplayMenu() {
+	public void DisplayMenu() throws InterruptedException {
 		
 		System.out.println("==========================================================");
 		System.out.println("Please Enter the name of 2 files you wish to compare:");
@@ -30,7 +30,7 @@ public class Menu {
 		System.out.print("File 2 => ");
 		file2 = scanner.nextLine();
 		
-		System.out.println("This is file 1: " + file1 + "\nThis is file 2: " + file2);
+		new Launcher().Launch(file1, file2);
 	}
 	
 	
