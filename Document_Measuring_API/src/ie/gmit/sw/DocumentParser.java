@@ -1,3 +1,4 @@
+//Author: Kevin Delassus - G00270791
 package ie.gmit.sw;
 
 import java.io.BufferedReader;
@@ -26,43 +27,35 @@ public class DocumentParser implements Runnable {
 	}
 	
 	public void run() {
-		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		String line = null;
 		
-		try {
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+		
+			String line = null;
+		
 			while((line = br.readLine()) != null) {
-				String uLine = line.toUpperCase();
-				String[] words = uLine.split(" ");
-				addWordsToBuffer(words);
-				Shingle s  = getNextShingle();
-				queue.put(s);
+				if(line.length()>0) {
+					String uLine = line.toUpperCase();
+					String[] words = uLine.split(" ");
+					addWordsToBuffer(words);
+					Shingle s  = getNextShingle();
+					queue.put(s);
+				}
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			flushBuffer();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			br.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
+			br.close();
+			flushBuffer();
+			
+		}catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void addWordsToBuffer(String[] words) {
