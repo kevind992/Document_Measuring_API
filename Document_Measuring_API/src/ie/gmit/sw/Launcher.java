@@ -1,7 +1,6 @@
+//Author: Kevin Delassus - G00270791
 package ie.gmit.sw;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
