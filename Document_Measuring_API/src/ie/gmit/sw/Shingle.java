@@ -1,3 +1,4 @@
+//Author: Kevin Delassus - G00270791
 package ie.gmit.sw;
 
 public class Shingle {

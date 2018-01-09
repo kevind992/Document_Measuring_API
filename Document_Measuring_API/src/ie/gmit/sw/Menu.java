@@ -1,3 +1,4 @@
+//Author: Kevin Delassus - G00270791
 package ie.gmit.sw;
 
 import java.util.Scanner;
@@ -12,12 +13,10 @@ public class Menu {
 		super();
 		scanner = new Scanner(System.in);
 	}
-	public Menu(String f1, String f2, Scanner s) {
+	public Menu(String f1, String f2) {
 		
 		this.file1 = f1;
 		this.file2 = f2;
-		this.scanner = s;
-		
 		
 	}
 	public void DisplayMenu() throws InterruptedException {
@@ -31,6 +30,8 @@ public class Menu {
 		file2 = scanner.nextLine();
 		
 		new Launcher().Launch(file1, file2);
+		
+		scanner.close();
 	}
 	
 	
