@@ -16,7 +16,7 @@ import ie.gmit.sw.Poison;
 public class Consumer implements Runnable {
 
 	private BlockingQueue<Shingle> queue;
-	private int k;
+	private int noOfHashes;
 	private int[] minhashes;
 	private ConcurrentMap<Integer, List<Integer>> map = new ConcurrentHashMap<Integer, List<Integer>>();
 	private ExecutorService pool;
@@ -27,14 +27,14 @@ public class Consumer implements Runnable {
 
 	public Consumer(BlockingQueue<Shingle> q, int k, int poolSize) {
 		this.queue = q;
-		this.k = k;
+		this.noOfHashes = k;
 		pool = Executors.newFixedThreadPool(poolSize);
 		init();
 	}
 
 	public void init() {
 		Random random = new Random();
-		minhashes = new int[k];
+		minhashes = new int[noOfHashes];
 		for (int i = 0; i < minhashes.length; i++) {
 			minhashes[i] = random.nextInt();
 		}
@@ -57,7 +57,7 @@ public class Consumer implements Runnable {
 								int value = s.getHashCode() ^ minhashes[i];
 								list = map.get(s.getDocID());
 								if (list == null) {
-									list = new ArrayList<Integer>(Collections.nCopies(k, Integer.MAX_VALUE));
+									list = new ArrayList<Integer>(Collections.nCopies(noOfHashes, Integer.MAX_VALUE));
 									map.put(s.getDocID(), list);
 
 								} else {
@@ -78,7 +78,7 @@ public class Consumer implements Runnable {
 
 		List<Integer> intersection = map.get(1);
 		intersection.retainAll(map.get(2));
-		float jaccard = (float) intersection.size() / (k * 2 - (float) intersection.size());
+		float jaccard = (float) intersection.size() / (noOfHashes * 2 - (float) intersection.size());
 
 		System.out.println("Jaccard: " + (jaccard) * 100);
 	}
