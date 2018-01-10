@@ -7,11 +7,10 @@ public class Menu {
 	
 	private String file1;
 	private String file2;
-	private Scanner scanner;
+	private Scanner scanner  = new Scanner(System.in);
 	
 	public Menu() {
 		super();
-		scanner = new Scanner(System.in);
 	}
 	public Menu(String f1, String f2) {
 		
@@ -21,13 +20,16 @@ public class Menu {
 	}
 	public void DisplayMenu() throws InterruptedException {
 		
+		//Header
 		System.out.println("==========================================================");
-		System.out.println("Please Enter the name of 2 files you wish to compare:");
+		System.out.println("Please Enter the name of 2 files you wish to compare: ");
 		System.out.println("==========================================================");
+		
+		//Asking User of Textfiles
 		System.out.print("File 1 => ");
-		file1 = scanner.nextLine();
+		file1 = scanner.next();
 		System.out.print("File 2 => ");
-		file2 = scanner.nextLine();
+		file2 = scanner.next();
 		
 		new Launcher().Launch(file1, file2);
 		
