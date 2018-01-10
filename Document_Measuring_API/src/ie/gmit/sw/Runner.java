@@ -1,5 +1,11 @@
-//Author: Kevin Delassus - G00270791
 package ie.gmit.sw;
+
+/**
+ * Runner is used to run the application
+ * @author Kevin Delassus
+ * @author G00270791
+ *
+ */
 
 public class Runner {
 

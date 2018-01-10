@@ -10,9 +10,18 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 import ie.gmit.sw.Poison;
 
+/**
+ * This class compares the <code>minHashes</code> which were created in the
+ * Document Parser. The Results are stored in a Concurrent Hash Map. Being
+ * Concurrent allows multiple threads to access the map at more then one point.
+ * The Map doesn't lock.
+ * 
+ * @author Kevin Delassus
+ * @author G00270791
+ *
+ */
 public class Consumer implements Runnable {
 
 	private BlockingQueue<Shingle> queue;
@@ -21,10 +30,16 @@ public class Consumer implements Runnable {
 	private ConcurrentMap<Integer, List<Integer>> map = new ConcurrentHashMap<Integer, List<Integer>>();
 	private ExecutorService pool;
 
-	public ConcurrentMap<Integer, List<Integer>> getMap() {
-		return map;
-	}
-
+	/**
+	 * Consumer Constructor
+	 * 
+	 * @param q
+	 *            is the Blocking Queue
+	 * @param k
+	 *            is the number of minHashes
+	 * @param poolSize
+	 *            is the number of Executor worker threads.
+	 */
 	public Consumer(BlockingQueue<Shingle> q, int k, int poolSize) {
 		this.queue = q;
 		this.noOfHashes = k;
@@ -32,6 +47,10 @@ public class Consumer implements Runnable {
 		init();
 	}
 
+	/**
+	 * <code>init</code> creates random numbers and stores them into <code>minhashes</code>. The amount of
+	 * random numbers created depends on the <code>noOfHashes</code>.
+	 */
 	public void init() {
 		Random random = new Random();
 		minhashes = new int[noOfHashes];
@@ -40,6 +59,9 @@ public class Consumer implements Runnable {
 		}
 	}
 
+	/**
+	 * run starts the worker threads. Compares the <code>minhashes</code>
+	 */
 	public void run() {
 		int docCount = 2;
 		while (docCount > 0) {
@@ -75,11 +97,24 @@ public class Consumer implements Runnable {
 				e.printStackTrace();
 			}
 		}
+	}
 
-		List<Integer> intersection = map.get(1);
-		intersection.retainAll(map.get(2));
-		float jaccard = (float) intersection.size() / (noOfHashes * 2 - (float) intersection.size());
+	// Getter Methods
+	/**
+	 * This method returns <code>map</code>
+	 * 
+	 * @return this returns <code>map</code>
+	 */
+	public ConcurrentMap<Integer, List<Integer>> getMap() {
+		return map;
+	}
 
-		System.out.println("Jaccard: " + (jaccard) * 100);
+	/**
+	 * This method returns <code>noOfHashes</code>.
+	 * 
+	 * @return this returns <code>noOfHashes</code>
+	 */
+	public int getNoOfHashes() {
+		return noOfHashes;
 	}
 }
