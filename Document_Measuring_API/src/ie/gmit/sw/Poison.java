@@ -3,7 +3,8 @@ package ie.gmit.sw;
 
 /**
  * 
- * Marks end of file when adding to a Textfile. 
+ * Poison places a known data item on the queue and when the consumer reads this item  it closes down.
+ * Poison extends Shingle
  * 
  * @author Kevin Delassus 
  * @author G00270791
