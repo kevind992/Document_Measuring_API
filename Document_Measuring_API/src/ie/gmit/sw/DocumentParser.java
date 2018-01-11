@@ -111,7 +111,7 @@ public class DocumentParser implements Runnable , FileRead {
 	 * @return Shingle
 	 */
 	private Shingle getNextShingle() {
-		//Creating a StringBuilder
+		//Creating a StringBuilder.
 		StringBuilder sb = new StringBuilder();
 		int counter = 0;
 		
