@@ -10,11 +10,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 import ie.gmit.sw.Poison;
 
 /**
- * This class compares the <code>minHashes</code> which were created in the
- * Document Parser. The Results are stored in a Concurrent Hash Map. Being
+ * 
+ * In this class all the Shingles will be XOR-ed with <code>noOfHashes</code> which were created in the Document Parser.
+ * The Results are stored in a Concurrent Hash Map. Being
  * Concurrent allows multiple threads to access the map at more then one point.
  * The Map doesn't lock.
  * 
@@ -33,12 +36,9 @@ public class Consumer implements Runnable {
 	/**
 	 * Consumer Constructor
 	 * 
-	 * @param q
-	 *            is the Blocking Queue
-	 * @param k
-	 *            is the number of minHashes
-	 * @param poolSize
-	 *            is the number of Executor worker threads.
+	 * @param q is the Blocking Queue     
+	 * @param k is the number of minHashes
+	 * @param poolSize is the number of Executor worker threads.
 	 */
 	public Consumer(BlockingQueue<Shingle> q, int k, int poolSize) {
 		this.queue = q;
@@ -91,11 +91,18 @@ public class Consumer implements Runnable {
 							map.put(s.getDocID(), list);
 						}
 					});
+					
 				}
-
+				
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+		}
+		pool.shutdown();
+		try {
+			pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MINUTES);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 
