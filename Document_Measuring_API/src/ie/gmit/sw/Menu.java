@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class Menu {
 	
+	//Member Variables
 	private String file1;
 	private String file2;
 	private Scanner scanner  = new Scanner(System.in);
@@ -26,6 +27,7 @@ public class Menu {
 	 * @param f2 is for File 2.
 	 * 
 	 */
+	//Constructor
 	public Menu(String f1, String f2) {
 		
 		this.file1 = f1;
@@ -46,14 +48,16 @@ public class Menu {
 		System.out.println("Please Enter the name of 2 files you wish to compare: ");
 		System.out.println("==========================================================");
 		
-		//Asking User of Textfiles
+		//Asking User for Textfiles
 		System.out.print("File 1 => ");
 		file1 = scanner.next();
 		System.out.print("File 2 => ");
 		file2 = scanner.next();
 		
+		//Creating Launcher and sending file1 and file2
 		new Launcher().Launch(file1, file2);
 		
+		//Closing scanner.
 		scanner.close();
 	}
 }
