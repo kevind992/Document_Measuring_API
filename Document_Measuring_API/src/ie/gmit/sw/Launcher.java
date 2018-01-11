@@ -31,15 +31,15 @@ public class Launcher {
 		
 		//Setting Shingle Size and k which is the number of minHashes
 		int shingleSize = 3;
-		int noOfHashes = 300;
+		int noOfHashes = 500;
 		int poolSize = 200;
 			
 		//Setting Blocking Queue
 		BlockingQueue<Shingle> q = new LinkedBlockingQueue<Shingle>(100);	
 		
 		//Setting Up Threads
-		Thread t1 = new Thread(new DocumentParser(f1,noOfHashes,shingleSize, q, 1),"T1");
-		Thread t2 = new Thread(new DocumentParser(f2,noOfHashes,shingleSize, q, 2),"T2");
+		Thread t1 = new Thread(new DocumentParser(f1,shingleSize, q, 1),"T1");
+		Thread t2 = new Thread(new DocumentParser(f2,shingleSize, q, 2),"T2");
 		Thread t3 = new Thread(c = new Consumer(q, noOfHashes, poolSize),"T3");
 		
 		//Starting Threads
@@ -64,7 +64,7 @@ public class Launcher {
 	 * 
 	 * @return A float value with the calculated jaccard
 	 */
-	public void calculateJaccard() {
+	private void calculateJaccard() {
 		
 		List<Integer> intersection = c.getMap().get(1);
 		intersection.retainAll(c.getMap().get(2));
@@ -74,7 +74,7 @@ public class Launcher {
 	/**
 	 * displayJaccard displays the jaccard value which was calculated in calculateJaccard
 	 */
-	public void displayJaccard() {
+	private void displayJaccard() {
 		System.out.println("Jaccard: " + (this.jaccard) * 100);
 	}
 }
