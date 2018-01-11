@@ -15,6 +15,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class Launcher {
 	
+	//Creating Variables
 	private Consumer c;
 	private float jaccard;
 	
@@ -47,6 +48,7 @@ public class Launcher {
 		t2.start();
 		t3.start();
 		
+		//Loading Message
 		System.out.println("\n\nProcessing.......Please Wait.......\n\n");
 		
 		//Ending Threads
@@ -66,8 +68,10 @@ public class Launcher {
 	 */
 	private void calculateJaccard() {
 		
+		//Getting the map from the Consumer class
 		List<Integer> intersection = c.getMap().get(1);
 		intersection.retainAll(c.getMap().get(2));
+		//Calculating Jaccard
 		this.jaccard = (float) intersection.size() / (c.getNoOfHashes() * 2 - (float) intersection.size());
 		
 	}
@@ -75,6 +79,7 @@ public class Launcher {
 	 * displayJaccard displays the jaccard value which was calculated in calculateJaccard
 	 */
 	private void displayJaccard() {
+		//Displaying result to the user
 		System.out.println("Jaccard: " + (this.jaccard) * 100);
 	}
 }
