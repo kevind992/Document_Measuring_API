@@ -31,7 +31,7 @@ public class Launcher {
 		
 		//Setting Shingle Size and k which is the number of minHashes
 		int shingleSize = 3;
-		int noOfHashes = 500;
+		int noOfHashes = 300;
 		int poolSize = 200;
 			
 		//Setting Blocking Queue
