@@ -51,7 +51,7 @@ public class Consumer implements Runnable {
 	 * <code>init</code> creates random numbers and stores them into <code>minhashes</code>. The amount of
 	 * random numbers created depends on the <code>noOfHashes</code>.
 	 */
-	public void init() {
+	private void init() {
 		Random random = new Random();
 		minhashes = new int[noOfHashes];
 		for (int i = 0; i < minhashes.length; i++) {
