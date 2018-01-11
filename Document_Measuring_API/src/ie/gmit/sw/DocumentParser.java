@@ -36,11 +36,10 @@ public class DocumentParser implements Runnable , FileRead {
 	 * @param id is the either file 1 or file 2 depending on which thread is running.
 	 */
 	
-	public DocumentParser(String file, int shingleSize, int k, BlockingQueue<Shingle> q, int id) {
+	public DocumentParser(String file,int shingleSize, BlockingQueue<Shingle> q, int id) {
 		super();
 		this.file = file;
 		this.shingleSize = shingleSize;
-		this.noOfHashes = k;
 		this.queue = q;
 		this.docID = id;
 	}
