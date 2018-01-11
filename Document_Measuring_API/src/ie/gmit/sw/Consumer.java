@@ -52,9 +52,11 @@ public class Consumer implements Runnable {
 	 * random numbers created depends on the <code>noOfHashes</code>.
 	 */
 	private void init() {
+		//Creating a Random object.
 		Random random = new Random();
 		minhashes = new int[noOfHashes];
 		for (int i = 0; i < minhashes.length; i++) {
+			//Creates a new random number and assignes it to minhashes.
 			minhashes[i] = random.nextInt();
 		}
 	}
@@ -62,28 +64,38 @@ public class Consumer implements Runnable {
 	/**
 	 * run starts the worker threads. Compares the <code>minhashes</code>
 	 */
+	//Starts Thread
 	public void run() {
 		int docCount = 2;
+		//While docCount is greater then 0
 		while (docCount > 0) {
 			try {
+				//Creates a new Shingle and takes from queue
 				Shingle s = queue.take();
+				//if s is an instance of Poison then decrement docCount
 				if (s instanceof Poison) {
 					docCount--;
 				} else {
+					//Creating the executer pool (Worker Threads)
 					pool.execute(new Runnable() {
 						@Override
+						//Starting the worker threads
 						public void run() {
-
+							//Creating a list of integer and assigning the shingle id
 							List<Integer> list = map.get(s.getDocID());
+							//loop runs for whatever the length of minhashes is
 							for (int i = 0; i < minhashes.length; i++) {
 								int value = s.getHashCode() ^ minhashes[i];
 								list = map.get(s.getDocID());
+								//if list is equaled to null
 								if (list == null) {
 									list = new ArrayList<Integer>(Collections.nCopies(noOfHashes, Integer.MAX_VALUE));
+									//Assigning s id and list to the map
 									map.put(s.getDocID(), list);
 
 								} else {
 									if (list.get(i) > value) {
+										//Setting list to the value of i and value
 										list.set(i, value);
 									}
 								}
@@ -98,6 +110,7 @@ public class Consumer implements Runnable {
 				e.printStackTrace();
 			}
 		}
+		//Shutting down executer pool
 		pool.shutdown();
 		try {
 			pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MINUTES);
